@@ -1858,3 +1858,81 @@ svg.i { display: inline-block; vertical-align: middle; }
   .tk-panel-head { flex-wrap: wrap; }
   .tk-cols { grid-template-columns: 1fr; gap: 18px; }
 }
+
+/* ================= Reszponzív finomhangolás (telefon / tablet) ================= */
+
+/* Semmi ne tudja vízszintesen kitolni az oldalt */
+.content, .cfg-card, .tk-panel-body, .tk-cat-body { max-width: 100%; }
+.cfg-input, .cfg-textarea, .field-input, select.cfg-input { max-width: 100%; }
+
+/* Tablet – a szűkebb kártyákban egy oszlop többet ér, mint két összenyomott */
+@media (max-width: 900px) {
+  .tk-cols { grid-template-columns: 1fr; gap: 18px; }
+  .cfg-card { padding: 18px 18px 20px; }
+  .toolbar { flex-wrap: wrap; }
+  .search { flex: 1 1 220px; }
+}
+
+/* Telefon */
+@media (max-width: 640px) {
+  /* iOS-en a 16px alatti mezőbe fókuszálva a böngésző ránagyít – ezt kerüljük el */
+  .cfg-input, .cfg-textarea, .field-input, .search input, .rp-num-input, select.cfg-input, input, select, textarea {
+    font-size: 16px;
+  }
+  .cfg-field label { font-size: 10.5px; }
+
+  .cfg-card { padding: 16px 15px 18px; border-radius: 16px; }
+  .cfg-head { margin-bottom: 14px; }
+
+  /* kényelmesen megnyomható gombok */
+  .btn { min-height: 40px; padding: 0 14px; }
+  .btn-icon-danger { width: 38px; height: 38px; }
+  .page-back { min-height: 32px; }
+
+  .tk-note { padding: 12px 13px; gap: 10px; font-size: 12px; }
+
+  .tk-sect-bar { align-items: stretch; flex-direction: column; gap: 10px; }
+  .tk-sect-bar .btn { width: 100%; justify-content: center; }
+
+  .tk-panel-head { padding: 13px 14px; gap: 11px; align-items: flex-start; }
+  .tk-panel-head .tk-ico { width: 30px; height: 30px; flex-basis: 30px; }
+  .tk-panel-head .tk-title { font-size: 14.5px; }
+  .tk-panel-head .btn-icon-danger { margin-left: auto; }
+  .tk-panel-head .tk-chev { margin-top: 10px; }
+  .tk-panel-body { padding: 0 14px 18px; }
+
+  .tk-cat-head { padding: 12px 12px; align-items: flex-start; }
+  .tk-cat-emoji { width: 30px; height: 30px; flex-basis: 30px; }
+  .tk-cat-head .tk-chev { margin-top: 9px; }
+  .tk-cat-body { padding: 2px 12px 14px; }
+
+  /* a szegmentált kapcsolók töltsék ki a sort, hogy ujjal is eltalálhatók legyenek */
+  .tk-seg { width: 100%; }
+  .tk-seg button { flex: 1 1 auto; justify-content: center; min-height: 36px; }
+
+  .tk-q { padding: 11px 11px; }
+  .tk-empty { padding: 30px 18px; }
+  .tk-empty .tk-empty-ico { width: 46px; height: 46px; }
+
+  .row-toggle { min-height: 34px; }
+  .toast-wrap { left: 12px; right: 12px; bottom: 12px; }
+  .toast { width: 100%; }
+}
+
+/* Kis telefon */
+@media (max-width: 400px) {
+  .page-title { font-size: 22px; }
+  .cfg-card { padding: 14px 13px 16px; }
+  .tk-panel-head { padding: 12px 12px; }
+  .tk-panel-body { padding: 0 12px 16px; }
+  .tk-chip { font-size: 10px; padding: 3px 8px; }
+  .tk-cat-body .cfg-field label em { display: block; margin-left: 0; }
+}
+
+/* Érintős eszközön ne ragadjon be a hover állapot, és ne villanjon a koppintás */
+@media (hover: none) {
+  * { -webkit-tap-highlight-color: transparent; }
+  .btn:hover { background: var(--glass); border-color: var(--line); }
+  .btn-primary:hover { filter: none; }
+  .tk-panel-head:hover, .tk-cat-head:hover { background: transparent; }
+}
