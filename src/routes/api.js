@@ -740,6 +740,33 @@ router.get('/bots/:id/tickets', async (req, res) => {
   res.json(mergeTicketConfig(raw));
 });
 
+// egy panel elkuldese / frissitese a Discordon; { ok, messageId, error }
+async function pushTicketPanel(panel, token) {
+  if (!/^[0-9]{1,30}$/.test(panel.channelId ?? '')) return { ok: false, error: 'nincs csatorna beállítva' };
+  if (!panel.categories?.length) return { ok: false, error: 'nincs kategória' };
+
+  const payload = buildPanelPayload(panel);
+  const headers = { Authorization: `Bot ${token}`, 'Content-Type': 'application/json' };
+
+  if (panel.messageId) {
+    const r = await fetch(`https://discord.com/api/v10/channels/${panel.channelId}/messages/${panel.messageId}`, {
+      method: 'PATCH', headers, body: JSON.stringify(payload),
+    }).catch(() => null);
+    if (r?.ok) return { ok: true, messageId: panel.messageId };
+  }
+
+  const r = await fetch(`https://discord.com/api/v10/channels/${panel.channelId}/messages`, {
+    method: 'POST', headers, body: JSON.stringify(payload),
+  }).catch(() => null);
+  if (!r?.ok) {
+    let detail = '';
+    try { detail = (await r.json())?.message ?? ''; } catch {}
+    return { ok: false, error: detail || 'a bot nem tud írni a csatornába' };
+  }
+  const msg = await r.json().catch(() => null);
+  return msg?.id ? { ok: true, messageId: msg.id } : { ok: false, error: 'ismeretlen Discord válasz' };
+}
+
 router.put('/bots/:id/tickets', async (req, res) => {
   const ctx = await resolveBotAccess(req, res, 'canEditSettings');
   if (!ctx) return;
@@ -747,11 +774,11 @@ router.put('/bots/:id/tickets', async (req, res) => {
   // a meglévő messageId-ket megőrizzük, hogy a közzétett panel frissíthető maradjon
   let prev = null;
   try { prev = mergeTicketConfig(await db.getTicketConfig(req.params.id)); } catch {}
-  const prevMsgIds = Object.fromEntries((prev?.panels ?? []).map(p => [p.id, p.messageId]));
+  const prevById = Object.fromEntries((prev?.panels ?? []).map(p => [p.id, p]));
 
   const config = sanitizeTicketConfig(req.body, { genId: uuidv4 });
   for (const p of config.panels) {
-    if (!p.messageId && prevMsgIds[p.id]) p.messageId = prevMsgIds[p.id];
+    if (!p.messageId && prevById[p.id]?.messageId) p.messageId = prevById[p.id].messageId;
   }
 
   try {
@@ -761,11 +788,40 @@ router.put('/bots/:id/tickets', async (req, res) => {
     res.status(500).json({ error: 'Adatbázis hiba mentés közben' });
     return;
   }
+
+  // a panelek mentéskor automatikusan kimennek / frissülnek a Discordon
+  const token = decryptToken(ctx.bot.botTokenEnc);
+  const panels = [];
+  let msgIdChanged = false;
+  for (const p of config.panels) {
+    // a még hiányosan kitöltött panel nem hiba, csak nem megy ki
+    if (!/^[0-9]{1,30}$/.test(p.channelId ?? '') || !p.categories.length) {
+      panels.push({ id: p.id, name: p.name, ok: true, skipped: true });
+      continue;
+    }
+    // ha a látható panel nem változott, nem terheljük feleslegesen a Discordot
+    const before = prevById[p.id];
+    if (before?.messageId && before.messageId === p.messageId
+        && JSON.stringify(buildPanelPayload(before)) === JSON.stringify(buildPanelPayload(p))) {
+      panels.push({ id: p.id, name: p.name, ok: true, skipped: true });
+      continue;
+    }
+    const out = await pushTicketPanel(p, token);
+    if (out.ok && out.messageId !== p.messageId) { p.messageId = out.messageId; msgIdChanged = true; }
+    panels.push({ id: p.id, name: p.name, ok: out.ok, error: out.error });
+  }
+  if (msgIdChanged) await db.setTicketConfig(req.params.id, config).catch(() => {});
+
   const user = await db.getUserById(ctx.payload.sub);
   log('tickets_save', `${user?.name ?? 'Ismeretlen'} mentette a hibajegy beállításokat a(z) ${ctx.bot.botName} botnál`, { userName: user?.name, userId: ctx.payload.sub, src: ctx.bot.botName });
-  res.json({ ok: true, config });
+  const published = panels.filter(p => p.ok && !p.skipped).length;
+  if (published) {
+    log('tickets_publish', `${user?.name ?? 'Ismeretlen'} kiküldte a hibajegy paneleket (${published} db) a(z) ${ctx.bot.botName} botnál`, { userName: user?.name, userId: ctx.payload.sub, src: ctx.bot.botName });
+  }
+  res.json({ ok: true, config, panels });
 });
 
+// kézi újraküldés (a mentés amúgy automatikusan kiküldi a paneleket)
 router.post('/bots/:id/tickets/panels/:panelId/publish', async (req, res) => {
   const ctx = await resolveBotAccess(req, res, 'canEditSettings');
   if (!ctx) return;
@@ -774,46 +830,23 @@ router.post('/bots/:id/tickets/panels/:panelId/publish', async (req, res) => {
   try { config = mergeTicketConfig(await db.getTicketConfig(req.params.id)); } catch {}
   const panel = findPanel(config, req.params.panelId);
   if (!panel) { res.status(404).json({ error: 'A panel nem található. Előbb mentsd a beállításokat.' }); return; }
-  if (!/^[0-9]{1,30}$/.test(panel.channelId)) { res.status(400).json({ error: 'A panelhez nincs érvényes csatorna beállítva.' }); return; }
-  if (!panel.categories.length) { res.status(400).json({ error: 'A panelhez legalább egy kategória kell.' }); return; }
 
-  const token = decryptToken(ctx.bot.botTokenEnc);
-  const payload = buildPanelPayload(panel);
-  const headers = { Authorization: `Bot ${token}`, 'Content-Type': 'application/json' };
-
-  let messageId = panel.messageId;
-  let ok = false;
-
-  if (messageId) {
-    const r = await fetch(`https://discord.com/api/v10/channels/${panel.channelId}/messages/${messageId}`, {
-      method: 'PATCH', headers, body: JSON.stringify(payload),
-    }).catch(() => null);
-    ok = !!r?.ok;
-  }
-  if (!ok) {
-    const r = await fetch(`https://discord.com/api/v10/channels/${panel.channelId}/messages`, {
-      method: 'POST', headers, body: JSON.stringify(payload),
-    }).catch(() => null);
-    if (!r?.ok) {
-      let detail = '';
-      try { detail = (await r.json())?.message ?? ''; } catch {}
-      res.status(400).json({ error: `Nem sikerült elküldeni a panelt. Ellenőrizd, hogy a bot lát-e a csatornába és van-e üzenet küldése joga. ${detail}`.trim() });
-      return;
-    }
-    const msg = await r.json();
-    messageId = msg.id;
+  const out = await pushTicketPanel(panel, decryptToken(ctx.bot.botTokenEnc));
+  if (!out.ok) {
+    res.status(400).json({ error: `Nem sikerült elküldeni a panelt: ${out.error}. Ellenőrizd, hogy a bot látja-e a csatornát és van-e üzenet küldése joga.` });
+    return;
   }
 
   // messageId visszaírása a konfigba
   const stored = await db.getTicketConfig(req.params.id).catch(() => null);
   if (stored?.panels) {
     const p = stored.panels.find(x => x.id === panel.id);
-    if (p) { p.messageId = messageId; await db.setTicketConfig(req.params.id, stored).catch(() => {}); }
+    if (p) { p.messageId = out.messageId; await db.setTicketConfig(req.params.id, stored).catch(() => {}); }
   }
 
   const user = await db.getUserById(ctx.payload.sub);
   log('tickets_publish', `${user?.name ?? 'Ismeretlen'} közzétette a(z) "${panel.name}" hibajegy panelt (${ctx.bot.botName})`, { userName: user?.name, userId: ctx.payload.sub, src: ctx.bot.botName });
-  res.json({ ok: true, messageId });
+  res.json({ ok: true, messageId: out.messageId });
 });
 
 router.get('/bots/:id/tickets/open', async (req, res) => {
