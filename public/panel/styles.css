@@ -1875,10 +1875,6 @@ svg.i { display: inline-block; vertical-align: middle; }
 
 /* Telefon */
 @media (max-width: 640px) {
-  /* iOS-en a 16px alatti mezőbe fókuszálva a böngésző ránagyít – ezt kerüljük el */
-  .cfg-input, .cfg-textarea, .field-input, .search input, .rp-num-input, select.cfg-input, input, select, textarea {
-    font-size: 16px;
-  }
   .cfg-field label { font-size: 10.5px; }
 
   .cfg-card { padding: 16px 15px 18px; border-radius: 16px; }
@@ -1935,4 +1931,29 @@ svg.i { display: inline-block; vertical-align: middle; }
   .btn:hover { background: var(--glass); border-color: var(--line); }
   .btn-primary:hover { filter: none; }
   .tk-panel-head:hover, .tk-cat-head:hover { background: transparent; }
+}
+
+/* hexkód mező – a méretét CSS adja, hogy mobilon felülírható legyen */
+.cfg-input-mono {
+  width: 110px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+
+/* ---- Érintőképernyő: ne nagyítson be a böngésző ---- */
+/* Mobilon a 16px-nél kisebb betűs mezőre koppintva a Chrome/Safari ránagyít az
+   oldalra, és utána nagyítva is marad – ezért minden űrlapmező 16px érintős
+   eszközön. A dupla koppintásos nagyítást a touch-action kapcsolja ki. */
+@media (pointer: coarse) {
+  input, select, textarea,
+  .cfg-input, .cfg-textarea, .cfg-input-mono, .field-input, .search input, .rp-num-input {
+    font-size: 16px;
+  }
+  button, a, label, summary,
+  .btn, .sb-link, .tb-tab, .tb-iconbtn, .toggle, .row-toggle, .checkbox-row,
+  .page-back, .tk-panel-head, .tk-cat-head, .tk-seg button, .cmd-row .icon-btn,
+  .bot-card, .user-row, .modal-close, .hamburger, .auth-tabs button, .auth-swap {
+    touch-action: manipulation;
+  }
+  .content { -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 }

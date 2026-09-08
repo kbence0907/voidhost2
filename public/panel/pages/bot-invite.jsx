@@ -176,7 +176,7 @@ function InvitePage({ bot, goBack, onUnsaved, moduleOn = true, onToggleModule })
               <label>Embed szín</label>
               <div style={{display:'flex',gap:10,alignItems:'center',marginTop:6}}>
                 <input type="color" value={W.embedColor} onChange={e => set('welcome','embedColor',e.target.value)} style={{width:36,height:36,border:'1px solid var(--line)',borderRadius:6,background:'none',cursor:'pointer',padding:2}} />
-                <input className="cfg-input" style={{width:110,fontFamily:"'JetBrains Mono',monospace",fontSize:13}} value={W.embedColor} onChange={e => set('welcome','embedColor',e.target.value)} maxLength={7} />
+                <input className="cfg-input cfg-input-mono" value={W.embedColor} onChange={e => set('welcome','embedColor',e.target.value)} maxLength={7} />
               </div>
             </div>
             <div className="row-toggle" onClick={() => set('welcome','showAvatar',!W.showAvatar)}>
@@ -243,7 +243,7 @@ function InvitePage({ bot, goBack, onUnsaved, moduleOn = true, onToggleModule })
                   <label>Embed szín</label>
                   <div style={{display:'flex',gap:10,alignItems:'center',marginTop:6}}>
                     <input type="color" value={L.embedColor} onChange={e => set('leave','embedColor',e.target.value)} style={{width:36,height:36,border:'1px solid var(--line)',borderRadius:6,background:'none',cursor:'pointer',padding:2}} />
-                    <input className="cfg-input" style={{width:110,fontFamily:"'JetBrains Mono',monospace",fontSize:13}} value={L.embedColor} onChange={e => set('leave','embedColor',e.target.value)} maxLength={7} />
+                    <input className="cfg-input cfg-input-mono" value={L.embedColor} onChange={e => set('leave','embedColor',e.target.value)} maxLength={7} />
                   </div>
                 </div>
                 <div className="row-toggle" onClick={() => set('leave','showAvatar',!L.showAvatar)}>

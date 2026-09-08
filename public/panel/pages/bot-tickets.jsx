@@ -102,7 +102,7 @@ function TkColorField({ value, onChange }) {
     <div style={{display:'flex',gap:10,alignItems:'center',marginTop:6}}>
       <input type="color" value={/^#[0-9a-fA-F]{6}$/.test(value) ? value : '#5865f2'} onChange={e => onChange(e.target.value)}
         style={{width:36,height:36,border:'1px solid var(--line)',borderRadius:6,background:'none',cursor:'pointer',padding:2}} />
-      <input className="cfg-input" style={{width:110,fontFamily:"'JetBrains Mono',monospace",fontSize:13}} value={value} onChange={e => onChange(e.target.value)} maxLength={7} />
+      <input className="cfg-input cfg-input-mono" value={value} onChange={e => onChange(e.target.value)} maxLength={7} />
     </div>
   );
 }
