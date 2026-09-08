@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "voidhost",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--use-system-ca", "src/index.js"],
+      "port": 8080,
+      "autoPort": false
+    },
+    {
+      "name": "static-public",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [".claude/static-preview.mjs"],
+      "port": 8091,
+      "autoPort": false
+    }
+  ]
+}

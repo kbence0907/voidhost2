@@ -1,0 +1,1081 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VoidHost · Belépés</title>
+<link rel="icon" href="/assets/image/logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/panel/styles.css"/>
+<style>
+:root {
+  --blue-soft: #8aa6ff;
+  --ink: #e7ebff;
+  --ink-dim: #8b94b8;
+  --line: rgba(255,255,255,0.08);
+  --line-strong: rgba(255,255,255,0.14);
+  --glass: rgba(255,255,255,0.035);
+  --glass-2: rgba(255,255,255,0.06);
+}
+html, body { overflow:hidden; height:100%; }
+body { display:flex; flex-direction:column; height:100vh; padding:0; margin:0; font-family:'Inter',system-ui,sans-serif; }
+.auth-wrap { flex:1; display:flex; align-items:center; justify-content:center; padding:20px 28px; overflow:hidden; }
+.auth-grid {
+  width:100%; max-width:1040px;
+  display:grid; grid-template-columns: 1fr 420px;
+  gap:72px; align-items:center;
+}
+.auth-page { width:100%; max-width:420px; justify-self:end; }
+
+.auth-side { max-width:480px; }
+.auth-side .eyebrow {
+  font:500 12px 'JetBrains Mono',monospace; letter-spacing:2px;
+  color:var(--blue-soft); text-transform:uppercase;
+}
+.auth-side h1 {
+  font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.03em;
+  font-size:clamp(34px,3.6vw,48px); line-height:1.08; margin:14px 0 16px; color:#fff;
+}
+.auth-side h1 .grad {
+  background:linear-gradient(180deg,#ffffff 0%,#b8c8ff 60%,#6c8cff 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.auth-side h1 .blu { color:var(--blue-soft); font-style:italic; font-weight:500; }
+.auth-side p.sub { color:var(--ink-dim); font-size:15.5px; line-height:1.6; margin:0 0 26px; }
+.auth-perks { display:flex; flex-direction:column; gap:13px; margin:0; padding:0; list-style:none; }
+.auth-perks li { display:flex; align-items:flex-start; gap:11px; color:var(--ink-dim); font-size:14.5px; }
+.auth-perks li b { color:var(--ink); font-weight:600; }
+.auth-perks .tick {
+  flex:0 0 22px; width:22px; height:22px; margin-top:1px; border-radius:7px;
+  display:grid; place-items:center;
+  background:linear-gradient(150deg,rgba(77,124,255,.25),rgba(43,91,224,.08));
+  border:1px solid rgba(138,166,255,.3);
+}
+.auth-perks .tick svg { width:12px; height:12px; stroke:var(--blue-soft); }
+.auth-stats { display:flex; gap:28px; margin-top:30px; padding-top:22px; border-top:1px solid var(--line); }
+.auth-stats .st .v { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; color:#fff; }
+.auth-stats .st .v em { font-style:normal; color:var(--blue-soft); }
+.auth-stats .st .l { font-size:12px; color:var(--ink-faint); margin-top:2px; }
+
+.auth-grid.reg-mode { grid-template-columns: 420px 1fr; }
+.auth-grid.reg-mode .auth-side { order:2; justify-self:end; }
+.auth-grid.reg-mode .auth-page { order:1; justify-self:start; }
+.side-sec { animation: sideFade .55s cubic-bezier(0.22,1,0.36,1) both; }
+@keyframes sideFade {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:none; }
+}
+
+.site-nav {
+  position:sticky; top:0; z-index:100;
+  border-bottom:1px solid transparent;
+  transition:background .35s ease, border-color .35s ease;
+}
+.site-nav::after {
+  content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(138,166,255,0.45),transparent);
+  opacity:0; transition:opacity .35s ease;
+}
+.site-nav.scrolled {
+  background:rgba(5,8,20,0.72);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-bottom-color:rgba(255,255,255,0.06);
+}
+.site-nav.scrolled::after { opacity:1; }
+.nav-inner {
+  max-width:1240px; margin:0 auto;
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  padding:16px 28px;
+}
+.brand { display:flex; align-items:center; gap:11px; justify-self:start; text-decoration:none; }
+.brand-logo {
+  display:grid; place-items:center; width:38px; height:38px; border-radius:12px;
+  background:linear-gradient(150deg,rgba(77,124,255,0.28),rgba(43,91,224,0.10));
+  border:1px solid rgba(138,166,255,0.3);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.12), 0 0 18px rgba(77,124,255,0.28);
+  transition:transform .3s cubic-bezier(0.22,1,0.36,1), box-shadow .3s;
+}
+.brand-logo img { width:24px; height:24px; display:block; }
+.brand:hover .brand-logo { transform:translateY(-1px) rotate(-6deg); box-shadow:inset 0 1px 0 rgba(255,255,255,0.18), 0 0 26px rgba(77,124,255,0.5); }
+.brand-name { font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.01em; font-size:18px; color:#fff; }
+.brand-name span { color:var(--blue-soft); }
+.nav-links { display:flex; gap:4px; justify-self:center; }
+.nav-links a {
+  position:relative; padding:8px 4px; margin:0 12px;
+  font-size:14.5px; font-weight:500; color:var(--ink-dim);
+  text-decoration:none; transition:color .22s ease;
+}
+.nav-links a::after {
+  content:""; position:absolute; left:0; right:0; bottom:0; height:2px; border-radius:2px;
+  background:linear-gradient(90deg,#4d7cff,var(--blue-soft));
+  transform:scaleX(0); transform-origin:left; transition:transform .28s cubic-bezier(0.22,1,0.36,1);
+}
+.nav-links a:hover { color:var(--ink); }
+.nav-links a:hover::after { transform:scaleX(1); }
+.nav-cta { display:flex; gap:14px; align-items:center; justify-self:end; }
+.nav-login { font-size:14.5px; font-weight:500; color:var(--ink-dim); text-decoration:none; transition:color .2s; }
+.nav-login:hover { color:var(--ink); }
+.nav-join {
+  display:inline-flex; align-items:center; gap:7px;
+  padding:10px 18px; border-radius:999px;
+  font-size:14.5px; font-weight:600; color:#fff; text-decoration:none;
+  background:linear-gradient(180deg,#4d7cff,#2b5be0);
+  border:1px solid rgba(138,166,255,0.4);
+  box-shadow:0 6px 20px rgba(43,91,224,0.35), inset 0 1px 0 rgba(255,255,255,0.22);
+  transition:transform .18s ease, box-shadow .25s ease, filter .2s ease;
+  cursor:pointer;
+}
+.nav-join svg { width:17px; height:17px; transition:transform .22s ease; }
+.nav-join:hover { transform:translateY(-1px); box-shadow:0 10px 26px rgba(43,91,224,0.5), inset 0 1px 0 rgba(255,255,255,0.28); filter:brightness(1.06); }
+.nav-join:hover svg { transform:translateX(3px); }
+.nav-burger {
+  display:none; width:42px; height:42px; padding:0;
+  background:var(--glass); border:1px solid var(--line); border-radius:12px;
+  cursor:pointer; position:relative;
+}
+.nav-burger span {
+  display:block; position:absolute; left:11px; right:11px; height:2px; border-radius:2px;
+  background:var(--ink); transition:transform .3s ease, opacity .2s ease, top .3s ease;
+}
+.nav-burger span:nth-child(1) { top:14px; }
+.nav-burger span:nth-child(2) { top:20px; }
+.nav-burger span:nth-child(3) { top:26px; }
+.site-nav.drawer-open .nav-burger span:nth-child(1) { top:20px; transform:rotate(45deg); }
+.site-nav.drawer-open .nav-burger span:nth-child(2) { opacity:0; }
+.site-nav.drawer-open .nav-burger span:nth-child(3) { top:20px; transform:rotate(-45deg); }
+.nav-drawer {
+  display:flex; flex-direction:column; gap:4px;
+  max-height:0; overflow:hidden; opacity:0;
+  padding:0 20px;
+  transition:max-height .38s cubic-bezier(0.22,1,0.36,1), opacity .3s ease, padding .3s ease;
+}
+.site-nav.drawer-open .nav-drawer { max-height:340px; opacity:1; padding:8px 20px 20px; }
+.site-nav.drawer-open {
+  background:rgba(5,8,20,0.85);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+}
+.nav-drawer a {
+  padding:13px 16px; border-radius:12px; font-size:16px; font-weight:500; color:var(--ink-dim);
+  text-decoration:none; transition:background .2s, color .2s;
+}
+.nav-drawer a:hover { background:var(--glass); color:var(--ink); }
+.nav-drawer-cta {
+  margin-top:6px; text-align:center; color:#fff !important;
+  background:linear-gradient(180deg,#4d7cff,#2b5be0) !important;
+  box-shadow:0 6px 20px rgba(43,91,224,0.35);
+}
+
+.maint-banner {
+  position:relative; z-index:99;
+  background:linear-gradient(180deg, rgba(240,180,41,0.16), rgba(240,180,41,0.09));
+  border-bottom:1px solid rgba(240,180,41,0.32);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  animation:maintDrop .45s ease both;
+}
+@keyframes maintDrop { from { opacity:0; } to { opacity:1; } }
+.maint-inner {
+  max-width:1240px; margin:0 auto;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  padding:9px 28px;
+  font-size:13.5px; font-weight:500; color:#f6c650; text-align:center;
+}
+.maint-inner strong { color:#ffd873; font-weight:700; }
+.maint-inner svg { width:16px; height:16px; flex:0 0 16px; stroke:#f0b429; }
+@media (max-width:640px){ .maint-inner { padding:8px 16px; font-size:12.5px; gap:8px; } }
+
+@keyframes nebula-a { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(30px,20px) scale(1.08)} }
+@keyframes nebula-b { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-20px,-30px) scale(1.1)} }
+@keyframes nebula-c { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(15px,-20px) scale(0.95)} 66%{transform:translate(-10px,15px) scale(1.05)} }
+.nebula.a { animation:nebula-a 12s ease-in-out infinite; }
+.nebula.b { animation:nebula-b 16s ease-in-out infinite; }
+.nebula.c { animation:nebula-c 20s ease-in-out infinite; }
+.auth-logo { text-align:center; margin-bottom:24px; }
+@media (min-width:1021px) { .auth-logo { display:none; } }
+.auth-logo span { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; letter-spacing:2px; color:#fff; }
+.auth-logo span em { color:#6c63ff; font-style:normal; }
+.auth-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); border-radius:16px; padding:32px; }
+.auth-tabs { display:flex; gap:4px; background:rgba(0,0,0,.3); border-radius:8px; padding:4px; margin-bottom:24px; }
+.auth-tabs button { flex:1; padding:8px; border:none; background:transparent; color:rgba(255,255,255,.5); border-radius:6px; cursor:pointer; font-family:inherit; font-size:14px; font-weight:500; transition:all .2s; }
+.auth-tabs button.active { background:#6c63ff; color:#fff; }
+.field { margin-bottom:16px; }
+.field label { display:block; font-size:13px; color:rgba(255,255,255,.6); margin-bottom:6px; }
+.field input { width:100%; box-sizing:border-box; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:8px; padding:10px 14px; color:#fff; font-family:inherit; font-size:14px; outline:none; transition:border .2s; }
+.field input:focus { border-color:#6c63ff; }
+.field input.error { border-color:#ff4d6d; }
+.field-hint { font-size:12px; color:#ff4d6d; margin-top:4px; display:none; }
+.field-hint.show { display:block; }
+.btn-discord {
+  width:100%; padding:12px; background:#5865F2; color:#fff; border:none;
+  border-radius:8px; font-size:14px; font-weight:600; cursor:pointer;
+  font-family:inherit; display:flex; align-items:center; justify-content:center;
+  gap:10px; margin-bottom:16px;
+  transition:background .18s, transform .12s, box-shadow .18s;
+  box-shadow: 0 2px 12px rgba(88,101,242,.25);
+  position:relative; overflow:hidden;
+}
+.btn-discord:hover { background:#4752c4; box-shadow:0 4px 20px rgba(88,101,242,.4); }
+.btn-discord:active { transform:scale(.975); }
+.btn-discord svg { width:20px; height:20px; fill:#fff; flex:0 0 20px; }
+
+.divider { text-align:center; color:rgba(255,255,255,.3); font-size:13px; margin:16px 0; position:relative; }
+.divider::before, .divider::after { content:''; position:absolute; top:50%; width:40%; height:1px; background:rgba(255,255,255,.1); }
+.divider::before { left:0; } .divider::after { right:0; }
+
+.btn-submit {
+  width:100%; padding:13px; background:#6c63ff; color:#fff; border:none;
+  border-radius:8px; font-size:15px; font-weight:600; cursor:pointer;
+  font-family:inherit; margin-top:8px;
+  transition:background .18s, transform .12s, box-shadow .18s;
+  box-shadow: 0 2px 14px rgba(108,99,255,.3);
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  position:relative; overflow:hidden;
+}
+.btn-submit:hover:not(:disabled) { background:#7b73ff; box-shadow:0 4px 22px rgba(108,99,255,.5); }
+.btn-submit:active:not(:disabled) { transform:scale(.975); }
+.btn-submit:disabled { opacity:.4; cursor:not-allowed; box-shadow:none; }
+.btn-submit .spinner {
+  display:none; width:15px; height:15px; border:2px solid rgba(255,255,255,.3);
+  border-top-color:#fff; border-radius:50%;
+  animation:spin .6s linear infinite; flex:0 0 15px;
+}
+.btn-submit.loading .spinner { display:block; }
+.btn-submit.loading .btn-label { opacity:.7; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.btn-submit.success { background:#22c55e; box-shadow:0 4px 18px rgba(34,197,94,.4); }
+.btn-submit.success:hover { background:#16a34a; }
+.pw-wrap { position:relative; }
+.pw-wrap input { padding-right:40px; }
+.pw-eye { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:rgba(255,255,255,.4); cursor:pointer; padding:0; display:flex; }
+.pw-eye svg { width:18px; height:18px; }
+#pwHints span { transition:color .2s; }
+#pwHints span.ok, #resetHints span.ok { color:#4ade80; }
+.toast {
+  position:fixed; bottom:24px; right:24px; z-index:999;
+  background:#13151f; border:1px solid rgba(255,255,255,.1);
+  border-radius:14px; padding:14px 16px 14px 14px;
+  display:flex; align-items:flex-start; gap:12px;
+  min-width:280px; max-width:340px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  opacity:0; transform:translateY(16px) scale(.97);
+  transition:opacity .28s, transform .28s cubic-bezier(.22,1,.36,1);
+  pointer-events:none;
+}
+.toast.show { opacity:1; transform:translateY(0) scale(1); pointer-events:all; }
+.toast-ico {
+  width:32px; height:32px; border-radius:50%; flex:0 0 32px;
+  display:grid; place-items:center;
+}
+.toast-ico svg { width:16px; height:16px; }
+.toast.ok  .toast-ico { background:rgba(34,197,94,.15); }
+.toast.err .toast-ico { background:rgba(255,77,109,.15); }
+.toast.ok  .toast-ico svg { stroke:#4ade80; }
+.toast.err .toast-ico svg { stroke:#ff4d6d; }
+.toast-body { flex:1; min-width:0; }
+.toast-title { font-weight:600; font-size:14px; color:#e7ebff; margin-bottom:2px; }
+.toast-msg   { font-size:13px; color:#8b94b8; line-height:1.4; }
+.toast-close {
+  background:none; border:none; color:#5a6388; cursor:pointer;
+  padding:0; line-height:1; font-size:18px; flex:0 0 auto;
+  transition:color .15s;
+}
+.toast-close:hover { color:#e7ebff; }
+.verify-box { text-align:center; }
+.verify-box p { color:rgba(255,255,255,.6); font-size:14px; margin-bottom:20px; }
+.verify-code-input { display:flex; gap:8px; justify-content:center; margin-bottom:20px; }
+.verify-code-input input { width:44px; height:52px; text-align:center; font-size:22px; font-weight:700; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:8px; color:#fff; font-family:inherit; outline:none; transition:border .2s; }
+.verify-code-input input:focus { border-color:#6c63ff; }
+@media (max-width: 1020px) {
+  .auth-grid { grid-template-columns:1fr; gap:0; max-width:420px; }
+  .auth-side { display:none; }
+  .auth-page { justify-self:center; }
+}
+@media (max-width: 860px) {
+  .nav-links, .nav-login, .nav-join { display:none; }
+  .nav-burger { display:block; }
+}
+@media (max-width: 640px) {
+  .auth-wrap { padding:14px; }
+  .auth-page { max-width:100%; }
+  .toast { left:16px; right:16px; bottom:16px; min-width:unset; max-width:unset; width:auto; }
+}
+@media (max-width: 480px) {
+  html, body { overflow:auto; height:auto; }
+  body { display:block; min-height:100vh; }
+  .auth-wrap { min-height:calc(100vh - 80px); overflow:visible; }
+  .nav-inner { padding:12px 16px; }
+  .brand-name { font-size:16px; }
+  .brand-logo { width:34px; height:34px; }
+  .brand-logo img { width:21px; height:21px; }
+  .verify-code-input input { width:38px; height:46px; font-size:18px; }
+  .verify-code-input { gap:5px; }
+}
+</style>
+<script src="/assets/js/stars.js" defer></script>
+</head>
+<body>
+<div class="galaxy"></div>
+<div class="nebula a"></div>
+<div class="nebula b"></div>
+<div class="nebula c"></div>
+
+<header class="site-nav" id="siteNav">
+  <div class="nav-inner">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/image/logo.png" alt="voidhost"/></span>
+      <span class="brand-name">void<span>host</span></span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/#features">Funkciók</a>
+      <a href="/#ranks">Támogatás</a>
+      <a href="/#faq">GYIK</a>
+    </nav>
+
+    <div class="nav-cta">
+      <a class="nav-login" href="/">Főoldal</a>
+      <a class="nav-join" href="#" onclick="switchTab(currentTab === 'login' ? 'register' : 'login'); return false">
+        <span id="navSwitchLabel">Regisztráció</span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <button class="nav-burger" id="navBurger" aria-label="Menü megnyitása" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav-drawer" id="navDrawer">
+    <a href="/#features">Funkciók</a>
+    <a href="/#ranks">Támogatás</a>
+    <a href="/#faq">GYIK</a>
+    <a class="nav-drawer-cta" href="/">Főoldal</a>
+  </div>
+</header>
+
+<div class="maint-banner" id="maintBanner" hidden>
+  <div class="maint-inner">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+    <span>Oldalunkon jelenleg <strong>karbantartás</strong> van, csak az arra engedélyezett felhasználók léphetnek be az oldalra.</span>
+  </div>
+</div>
+
+<div class="auth-wrap">
+<div class="auth-grid">
+
+<div class="auth-side">
+  <div class="side-sec" id="sideLogin">
+    <span class="eyebrow">// Belépés</span>
+    <h1><span class="grad">A botod vezérlője</span><br/><span class="grad">egy </span><span class="blu">belépésre</span><span class="grad"> van.</span></h1>
+    <p class="sub">Jelentkezz be Discorddal vagy email-lel, és minden modult a webes panelről kapcsolsz. Nincs YAML, nincs config fájl.</p>
+    <ul class="auth-perks">
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 8-8"/></svg></span><span><b>Minden modul ingyen</b> ➡ üdvözlő, ticket, automod, log, role-menü</span></li>
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 8-8"/></svg></span><span><b>Discord belépés</b> ➡ egy kattintás, nincs külön jelszó</span></li>
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 8-8"/></svg></span><span><b>A te botod neve alatt</b> ➡ nem egy idegen bot beszél a tagjaiddal</span></li>
+    </ul>
+    <div class="auth-stats">
+      <div class="st"><div class="v">2 184<em>+</em></div><div class="l">aktív szerver</div></div>
+      <div class="st"><div class="v">147 K<em>+</em></div><div class="l">felhasználó</div></div>
+      <div class="st"><div class="v">0<em> Ft</em></div><div class="l">örökre</div></div>
+    </div>
+  </div>
+
+  <div class="side-sec" id="sideRegister" style="display:none">
+    <span class="eyebrow">// Regisztráció</span>
+    <h1><span class="grad">Hozd létre a fiókod</span><br/><span class="blu">90 másodperc</span><span class="grad"> alatt.</span></h1>
+    <p class="sub">Kösd össze a Discord fiókod, erősítsd meg az emailed, és már kapcsolhatod is a modulokat a saját botod alá.</p>
+    <ul class="auth-perks">
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 8-8"/></svg></span><span><b>Ingyenes örökre</b> ➡ nincs kártya, nincs próbaidő, nincs prémium fal</span></li>
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 8-8"/></svg></span><span><b>Discord összekötés</b> ➡ a fiókod egy kattintással kész</span></li>
+      <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 8-8"/></svg></span><span><b>Azonnal aktív</b> ➡ verifikáció után minden modul elérhető</span></li>
+    </ul>
+    <div class="auth-stats">
+      <div class="st"><div class="v">~90<em>s</em></div><div class="l">átlagos setup</div></div>
+      <div class="st"><div class="v">0<em> Ft</em></div><div class="l">előfizetés</div></div>
+      <div class="st"><div class="v">24<em>/7</em></div><div class="l">működés</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="auth-page">
+  <div class="auth-logo">
+    <span>void<em>host</em></span>
+  </div>
+
+  <div class="auth-card" id="mainCard">
+    <div class="auth-tabs">
+      <button id="tabLogin"    class="active" onclick="switchTab('login')">Belépés</button>
+      <button id="tabRegister"              onclick="switchTab('register')">Regisztráció</button>
+    </div>
+
+    <form id="formLogin" onsubmit="doLogin(); return false">
+      <button class="btn-discord" onclick="startDiscordOAuth('login')" type="button">
+        <svg viewBox="0 0 24 24"><path d="M20.3 4.4A19.5 19.5 0 0015.6 3a13 13 0 00-.6 1.2 18 18 0 00-5.4 0A12.5 12.5 0 009 3a19.6 19.6 0 00-4.7 1.4C1.5 8.8.7 13 1.1 17.2a19.7 19.7 0 006 3 15 15 0 001.3-2.1 12.8 12.8 0 01-2-.97l.5-.4a14 14 0 0012.2 0l.5.4a12.8 12.8 0 01-2 1 15 15 0 001.3 2.1 19.6 19.6 0 006-3c.5-5-1-9-3.7-12.8zM8.5 14.5c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4zm7 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4z"/></svg>
+        Belépés Discorddal
+      </button>
+      <div class="divider">vagy email-lel</div>
+      <div class="field">
+        <label>Email</label>
+        <input id="loginEmail" type="email" placeholder="te@valami.hu" autocomplete="email"/>
+      </div>
+      <div class="field">
+        <label>Jelszó</label>
+        <div class="pw-wrap">
+          <input id="loginPw" type="password" placeholder="••••••" autocomplete="current-password"/>
+          <button type="button" class="pw-eye" onclick="togglePw('loginPw',this)" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+      </div>
+      <button class="btn-submit" id="btnLogin" type="submit" onclick="doLogin()">
+        <div class="spinner"></div><span class="btn-label">Belépés →</span>
+      </button>
+    </form>
+
+    <form id="formRegister" style="display:none" onsubmit="doRegister(); return false">
+      <button class="btn-discord" id="btnDcRegister" onclick="startDiscordOAuth('register')" type="button">
+        <svg viewBox="0 0 24 24"><path d="M20.3 4.4A19.5 19.5 0 0015.6 3a13 13 0 00-.6 1.2 18 18 0 00-5.4 0A12.5 12.5 0 009 3a19.6 19.6 0 00-4.7 1.4C1.5 8.8.7 13 1.1 17.2a19.7 19.7 0 006 3 15 15 0 001.3-2.1 12.8 12.8 0 01-2-.97l.5-.4a14 14 0 0012.2 0l.5.4a12.8 12.8 0 01-2 1 15 15 0 001.3 2.1 19.6 19.6 0 006-3c.5-5-1-9-3.7-12.8zM8.5 14.5c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4zm7 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4z"/></svg>
+        Discord fiók összekötése
+      </button>
+
+      <div id="dcConnected" style="display:none;background:rgba(108,99,255,.15);border:1px solid #6c63ff33;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:#a0a0ff;align-items:center;gap:10px">
+        <img id="dcConnectedAvatar" src="" alt="" style="width:32px;height:32px;border-radius:50%;display:none"/>
+        <span>✓ Discord fiók összekötve: <strong id="dcConnectedName"></strong></span>
+      </div>
+      <input type="hidden" id="regDiscordId"/>
+      <input type="hidden" id="regDiscordUsername"/>
+      <input type="hidden" id="regDiscordAvatar"/>
+
+      <div class="divider">töltsd ki az adataid</div>
+
+      <div class="field">
+        <label>Felhasználónév</label>
+        <input id="regName" type="text" placeholder="pl. voidhost" autocomplete="username"/>
+        <div class="field-hint" id="hintName"></div>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input id="regEmail" type="email" placeholder="te@valami.hu" autocomplete="email"/>
+        <div class="field-hint" id="hintEmail"></div>
+      </div>
+      <div class="field">
+        <label>Jelszó <span id="pwHints" style="font-weight:400;font-size:11px;transition:color .2s;">(<span id="rLen">min. 6 kar.</span>, <span id="rNum">1 szám</span>, <span id="rSpec">1 special</span>, <span id="rSpace">nincs szóköz</span>)</span></label>
+        <div class="pw-wrap">
+          <input id="regPw" type="password" placeholder="••••••" autocomplete="new-password" oninput="checkPw()"/>
+          <button type="button" class="pw-eye" onclick="togglePw('regPw',this)" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="field-hint" id="hintPw"></div>
+      </div>
+      <div class="field">
+        <label>Jelszó mégegyszer</label>
+        <input id="regPw2" type="password" placeholder="••••••" autocomplete="new-password"/>
+        <div class="field-hint" id="hintPw2"></div>
+      </div>
+      <div class="field" style="margin-top:4px">
+        <label style="display:flex;align-items:flex-start;gap:9px;font-weight:400;font-size:13px;color:rgba(255,255,255,.65);cursor:pointer;line-height:1.5">
+          <input id="regTerms" type="checkbox" style="margin-top:2px;flex-shrink:0;width:16px;height:16px;accent-color:#7aa2ff;cursor:pointer"/>
+          <span>Elolvastam és elfogadom az <a href="/aszf" target="_blank" rel="noopener" style="color:#7aa2ff">Általános Szerződési Feltételeket</a> és az <a href="/adatvedelem" target="_blank" rel="noopener" style="color:#7aa2ff">Adatvédelmi Tájékoztatót</a>.</span>
+        </label>
+        <div class="field-hint" id="hintTerms"></div>
+      </div>
+      <button class="btn-submit" id="btnRegister" type="submit" onclick="doRegister()">
+        <div class="spinner"></div><span class="btn-label">Fiók létrehozása →</span>
+      </button>
+    </form>
+  </div>
+
+  <div class="auth-card" id="twoFACard" style="display:none">
+    <h3 style="margin:0 0 8px;color:#fff">Kétlépéses hitelesítés</h3>
+    <p style="color:rgba(255,255,255,.5);font-size:13px;margin:0 0 20px">Nyisd meg a Google Authenticator appot, és add meg a kódot.</p>
+    <div class="verify-code-input" id="twoFAInputs">
+      <input maxlength="1" type="text" inputmode="numeric" oninput="tfDigit(this,0)" onkeydown="tfKey(event,0)" onpaste="tfPaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="tfDigit(this,1)" onkeydown="tfKey(event,1)" onpaste="tfPaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="tfDigit(this,2)" onkeydown="tfKey(event,2)" onpaste="tfPaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="tfDigit(this,3)" onkeydown="tfKey(event,3)" onpaste="tfPaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="tfDigit(this,4)" onkeydown="tfKey(event,4)" onpaste="tfPaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="tfDigit(this,5)" onkeydown="tfKey(event,5)" onpaste="tfPaste(event)"/>
+    </div>
+    <button class="btn-submit" id="btnTwoFA" onclick="do2FA()">
+      <div class="spinner"></div><span class="btn-label">Megerősítés →</span>
+    </button>
+    <p style="margin-top:14px;font-size:13px;color:rgba(255,255,255,.4)"><button onclick="cancelTwoFA()" style="background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-family:inherit;font-size:13px">← Vissza a belépéshez</button></p>
+  </div>
+
+  <div class="auth-card" id="resetCard" style="display:none">
+    <h3 style="margin:0 0 8px;color:#fff">Új jelszó beállítása</h3>
+    <p style="color:rgba(255,255,255,.5);font-size:13px;margin:0 0 20px">Add meg az új jelszavad a <strong id="resetEmailLabel" style="color:#fff"></strong> fiókhoz.</p>
+    <div class="field">
+      <label>Új jelszó <span id="resetHints" style="font-weight:400;font-size:11px;">(<span id="rsLen">min. 8 kar.</span>, <span id="rsLetter">1 betű</span>, <span id="rsNum">1 szám</span>, <span id="rsSpec">1 special</span>, <span id="rsSpace">nincs szóköz</span>)</span></label>
+      <div class="pw-wrap">
+        <input id="resetPw" type="password" placeholder="••••••" autocomplete="new-password" oninput="checkResetPw()"/>
+        <button type="button" class="pw-eye" onclick="togglePw('resetPw',this)" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </div>
+      <div class="field-hint" id="hintResetPw"></div>
+    </div>
+    <div class="field">
+      <label>Új jelszó mégegyszer</label>
+      <input id="resetPw2" type="password" placeholder="••••••" autocomplete="new-password" onkeydown="if(event.key==='Enter')doReset()"/>
+      <div class="field-hint" id="hintResetPw2"></div>
+    </div>
+    <button class="btn-submit" id="btnReset" onclick="doReset()">
+      <div class="spinner"></div><span class="btn-label">Jelszó mentése →</span>
+    </button>
+    <p style="margin-top:14px;font-size:13px;color:rgba(255,255,255,.4)"><button onclick="cancelReset()" style="background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-family:inherit;font-size:13px">← Vissza a belépéshez</button></p>
+  </div>
+
+  <div class="auth-card" id="pendingCard" style="display:none">
+    <h3 style="margin:0 0 12px;color:#fff">Fiók jóváhagyásra vár</h3>
+    <p style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.6;margin:0 0 20px">
+      Az email címedet megerősítettük. A fiókodat egy adminisztrátor hamarosan átnézi és jóváhagyja,
+      erről <strong style="color:#fff">emailben</strong> értesítünk. Utána tudsz bejelentkezni.
+    </p>
+    <button class="btn-submit" onclick="window.location.href='/'"><span class="btn-label">Vissza a főoldalra →</span></button>
+  </div>
+
+  <div class="auth-card verify-box" id="verifyCard" style="display:none">
+    <h3 style="margin:0 0 12px;color:#fff">Ellenőrizd az emailt</h3>
+    <p>6 jegyű kódot küldtünk a <strong id="verifyEmailLabel"></strong> címre.</p>
+    <div class="verify-code-input" id="codeInputs">
+      <input maxlength="1" type="text" inputmode="numeric" oninput="codeDigit(this,0)" onkeydown="codeKey(event,0)" onpaste="codePaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="codeDigit(this,1)" onkeydown="codeKey(event,1)" onpaste="codePaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="codeDigit(this,2)" onkeydown="codeKey(event,2)" onpaste="codePaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="codeDigit(this,3)" onkeydown="codeKey(event,3)" onpaste="codePaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="codeDigit(this,4)" onkeydown="codeKey(event,4)" onpaste="codePaste(event)"/>
+      <input maxlength="1" type="text" inputmode="numeric" oninput="codeDigit(this,5)" onkeydown="codeKey(event,5)" onpaste="codePaste(event)"/>
+    </div>
+    <button class="btn-submit" id="btnVerify" onclick="doVerify()">
+      <div class="spinner"></div><span class="btn-label">Hitelesítés →</span>
+    </button>
+    <p style="margin-top:14px;font-size:13px;color:rgba(255,255,255,.4)">Nem kaptad meg? <button onclick="resendCode()" style="background:none;border:none;color:#6c63ff;cursor:pointer;font-family:inherit;font-size:13px">Újraküldés</button></p>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="toast" id="toast">
+  <div class="toast-ico">
+    <svg id="toastIco" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></svg>
+  </div>
+  <div class="toast-body">
+    <div class="toast-title" id="toastTitle"></div>
+    <div class="toast-msg"   id="toastMsg"></div>
+  </div>
+  <button class="toast-close" onclick="hideToast()">×</button>
+</div>
+
+<script>
+(function () {
+  var nav    = document.getElementById('siteNav');
+  var burger = document.getElementById('navBurger');
+  var drawer = document.getElementById('navDrawer');
+  burger.addEventListener('click', function () {
+    var open = nav.classList.toggle('drawer-open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  drawer.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      nav.classList.remove('drawer-open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+  function onScroll() { nav.classList.toggle('scrolled', window.scrollY > 8); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+(function () {
+  fetch('/auth/status')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (d && d.maintenance) {
+        var b = document.getElementById('maintBanner');
+        if (b) b.hidden = false;
+      }
+    })
+    .catch(function () {});
+})();
+
+let verifyEmail  = '';
+let oauthPopup   = null;
+let twoFATempToken = null;
+
+const DC_ERRORS = {
+  invalid_state: 'Érvénytelen OAuth állapot. Próbáld újra.',
+  discord_token: 'Discord token hiba. Próbáld újra.',
+  discord_user:  'Nem sikerült lekérni a Discord adatokat.',
+  no_account:    'Nincs ilyen Discord fiókhoz regisztrált felhasználó.',
+  not_verified:  'Az email nincs hitelesítve.',
+  no_rank:       'Nincs meg a szükséges rang. Szerezz megfelelő rangot a szerveren.',
+  maintenance:   'Az oldalon karbantartás van. Csak az engedélyezett felhasználók léphetnek be.',
+  pending_approval: 'A fiókod jóváhagyásra vár. Egy adminisztrátor hamarosan átnézi, és emailben értesítünk.',
+};
+
+window.addEventListener('storage', function(e) {
+  if (e.key !== '_vh_oauth_cb' || !e.newValue) return;
+  try {
+    const d = JSON.parse(e.newValue);
+    localStorage.removeItem('_vh_oauth_cb');
+    handleOAuth(d);
+  } catch(e2) {}
+});
+
+function checkOAuthStorage() {
+  const raw = localStorage.getItem('_vh_oauth_cb');
+  if (!raw) return;
+  localStorage.removeItem('_vh_oauth_cb');
+  try { handleOAuth(JSON.parse(raw)); } catch(e) {}
+}
+
+window.addEventListener('message', function(e) {
+  if (e.origin !== window.location.origin) return;
+  const d = e.data;
+  if (!d || !d.type) return;
+  handleOAuth(d);
+});
+
+function handleOAuth(d) {
+  if (!d || !d.type) return;
+
+  if (d.type === 'dc_login') {
+    localStorage.setItem('vh_token', d.token);
+    window.location.replace('/panel');
+    return;
+  }
+
+  if (d.type === 'dc_login_2fa') {
+    twoFATempToken = d.temp_token;
+    show2FA();
+    return;
+  }
+
+  if (d.type === 'dc_prefill') {
+    switchTab('register');
+    document.getElementById('regEmail').value           = d.dc_email    || '';
+    document.getElementById('regName').value            = d.dc_username || '';
+    document.getElementById('regDiscordId').value       = d.dc_id       || '';
+    document.getElementById('regDiscordUsername').value = d.dc_username || '';
+    document.getElementById('regDiscordAvatar').value   = d.dc_avatar   || '';
+    document.getElementById('dcConnectedName').textContent = d.dc_username || 'ismeretlen';
+    const dcBox = document.getElementById('dcConnected');
+    dcBox.style.display = 'flex';
+    const dcAvImg = document.getElementById('dcConnectedAvatar');
+    if (d.dc_id && d.dc_avatar) {
+      dcAvImg.src = `https://cdn.discordapp.com/avatars/${d.dc_id}/${d.dc_avatar}.png?size=64`;
+      dcAvImg.style.display = 'block';
+    }
+    document.getElementById('btnDcRegister').style.display = 'none';
+    if (d.error === 'no_account') {
+      toast('Discord összekötve', 'Töltsd ki az adataid a regisztrációhoz.', 'ok');
+    } else {
+      toast('Discord összekötve', 'A fiókod sikeresen össze van kötve.', 'ok');
+    }
+    return;
+  }
+
+  if (d.type === 'dc_error') {
+    toast('Discord hiba', DC_ERRORS[d.error] || d.error, 'err');
+  }
+}
+
+let currentTab = 'login';
+
+function switchTab(tab, instant) {
+  currentTab = tab;
+  document.getElementById('formLogin').style.display    = tab === 'login'    ? 'block' : 'none';
+  document.getElementById('formRegister').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  const lbl = document.getElementById('navSwitchLabel');
+  if (lbl) lbl.textContent = tab === 'login' ? 'Regisztráció' : 'Bejelentkezés';
+  swapAuthLayout(tab === 'register', instant);
+}
+
+function swapAuthLayout(toRegister, instant) {
+  const grid = document.querySelector('.auth-grid');
+  const side = document.querySelector('.auth-side');
+  const page = document.querySelector('.auth-page');
+  if (grid.classList.contains('reg-mode') === toRegister) return;
+
+  updateSideText(toRegister);
+
+  if (instant || window.matchMedia('(max-width:1020px)').matches) {
+    grid.classList.toggle('reg-mode', toRegister);
+    return;
+  }
+
+  const first = { s: side.getBoundingClientRect(), p: page.getBoundingClientRect() };
+  grid.classList.toggle('reg-mode', toRegister);
+  const last  = { s: side.getBoundingClientRect(), p: page.getBoundingClientRect() };
+
+  [[side, first.s.left - last.s.left], [page, first.p.left - last.p.left]].forEach(([el, dx]) => {
+    el.style.transition = 'none';
+    el.style.transform  = `translateX(${dx}px)`;
+    void el.offsetWidth;
+    el.style.transition = 'transform .65s cubic-bezier(0.22,1,0.36,1)';
+    el.style.transform  = '';
+    el.addEventListener('transitionend', function done(e) {
+      if (e.target !== el) return;
+      el.removeEventListener('transitionend', done);
+      el.style.transition = '';
+    });
+  });
+}
+
+function updateSideText(toRegister) {
+  const login = document.getElementById('sideLogin');
+  const reg   = document.getElementById('sideRegister');
+  const show  = toRegister ? reg : login;
+  const hide  = toRegister ? login : reg;
+  hide.style.display = 'none';
+  show.style.display = '';
+  show.style.animation = 'none';
+  void show.offsetWidth;
+  show.style.animation = '';
+}
+
+let oauthPollTimer = null;
+
+async function startDiscordOAuth(mode) {
+  const w = 480, h = 700;
+  const l = screen.width/2  - w/2;
+  const t = screen.height/2 - h/2;
+  localStorage.removeItem('_vh_oauth_cb');
+  oauthPopup = window.open('about:blank', 'discord_oauth', `width=${w},height=${h},left=${l},top=${t},toolbar=no,menubar=no`);
+  try {
+    const res  = await fetch(`/auth/discord?mode=${mode}`);
+    const data = await res.json();
+    if (oauthPopup) oauthPopup.location.href = data.url;
+  } catch(e) {
+    if (oauthPopup) oauthPopup.close();
+    toast('Hiba', 'Nem sikerült kapcsolódni a szerverhez.', 'err');
+    return;
+  }
+  clearInterval(oauthPollTimer);
+  oauthPollTimer = setInterval(() => {
+    checkOAuthStorage();
+    if (!oauthPopup || oauthPopup.closed) {
+      clearInterval(oauthPollTimer);
+      setTimeout(checkOAuthStorage, 200);
+    }
+  }, 300);
+}
+
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw    = document.getElementById('loginPw').value;
+  if (!email || !pw) return toast('Hiányzó adat', 'Töltsd ki az összes mezőt.', 'err');
+
+  const btn = document.getElementById('btnLogin');
+  setLoading(btn, true);
+  try {
+    const res  = await fetch('/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, password: pw }) });
+    const data = await res.json();
+    if (!res.ok) { setLoading(btn, false); return toast('Sikertelen belépés', data.error, 'err'); }
+    if (data.requires_2fa) {
+      twoFATempToken = data.temp_token;
+      setLoading(btn, false);
+      show2FA();
+      return;
+    }
+    setSuccess(btn, 'Siker! Átirányítás...');
+    toast('Siker!', 'Sikeresen beléptél, átirányítás...', 'ok');
+    localStorage.setItem('vh_token', data.token);
+    setTimeout(() => window.location.replace('/panel'), 700);
+  } catch(e) { setLoading(btn, false); toast('Hálózati hiba', 'Nem sikerült kapcsolódni a szerverhez.', 'err'); }
+}
+
+async function doRegister() {
+  const discordId       = document.getElementById('regDiscordId').value;
+  const discordUsername = document.getElementById('regDiscordUsername').value;
+  const discordAvatar   = document.getElementById('regDiscordAvatar').value;
+
+  const name  = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pw    = document.getElementById('regPw').value;
+  const pw2   = document.getElementById('regPw2').value;
+
+  clearHints();
+  let ok = true;
+  if (name.length < 2) { showHint('hintName','Legalább 2 karakter.'); ok = false; }
+  if (!email.includes('@')) { showHint('hintEmail','Érvénytelen email.'); ok = false; }
+  if (pw !== pw2) { showHint('hintPw2','A két jelszó nem egyezik.'); ok = false; }
+  if (!document.getElementById('regTerms').checked) { showHint('hintTerms','El kell fogadnod az ÁSZF-et és az Adatvédelmi Tájékoztatót.'); ok = false; }
+  if (!ok) return;
+
+  const btn = document.getElementById('btnRegister');
+  setLoading(btn, true);
+  try {
+    const body = { email, name, password: pw };
+    if (discordId) { body.discord_id = discordId; body.discord_username = discordUsername; body.discord_avatar = discordAvatar; }
+    const res  = await fetch('/auth/register', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (!res.ok) { setLoading(btn, false); return toast('Sikertelen regisztráció', data.error, 'err'); }
+    setSuccess(btn, 'Kód elküldve!');
+    toast('Kód elküldve!', 'Ellenőrizd az email fiókodat.', 'ok');
+    verifyEmail = email;
+    document.getElementById('verifyEmailLabel').textContent = email;
+    setTimeout(() => {
+      document.getElementById('mainCard').style.display   = 'none';
+      document.getElementById('verifyCard').style.display = '';
+      setLoading(btn, false);
+    }, 700);
+  } catch(e) { setLoading(btn, false); toast('Hálózati hiba', 'Nem sikerült kapcsolódni a szerverhez.', 'err'); }
+}
+
+function show2FA() {
+  document.getElementById('mainCard').style.display   = 'none';
+  document.getElementById('verifyCard').style.display = 'none';
+  document.getElementById('twoFACard').style.display  = '';
+  setTimeout(() => { const inp = document.querySelector('#twoFAInputs input'); if (inp) inp.focus(); }, 50);
+}
+
+function cancelTwoFA() {
+  twoFATempToken = null;
+  document.getElementById('twoFACard').style.display  = 'none';
+  document.getElementById('mainCard').style.display   = '';
+  document.querySelectorAll('#twoFAInputs input').forEach(i => i.value = '');
+}
+
+let resetEmail = null, resetCode = null;
+
+function checkResetPw() {
+  const val = document.getElementById('resetPw').value;
+  const checks = {
+    rsLen:    val.length >= 8,
+    rsLetter: /[a-zA-Z]/.test(val),
+    rsNum:    /[0-9]/.test(val),
+    rsSpec:   /[^a-zA-Z0-9]/.test(val),
+    rsSpace:  val.length > 0 && !/\s/.test(val),
+  };
+  for (const [id, ok] of Object.entries(checks)) {
+    document.getElementById(id).classList.toggle('ok', ok);
+  }
+}
+
+function validResetPw(pw) {
+  return pw.length >= 8 && pw.length <= 256 && !/\s/.test(pw) &&
+    /[0-9]/.test(pw) && /[^a-zA-Z0-9]/.test(pw) && /[a-zA-Z]/.test(pw);
+}
+
+async function doReset() {
+  const pw  = document.getElementById('resetPw').value;
+  const pw2 = document.getElementById('resetPw2').value;
+  clearHints();
+  let ok = true;
+  if (!validResetPw(pw)) { showHint('hintResetPw','Min. 8 karakter, 1 betű, 1 szám, 1 speciális karakter, szóköz nélkül.'); ok = false; }
+  if (pw !== pw2) { showHint('hintResetPw2','A két jelszó nem egyezik.'); ok = false; }
+  if (!ok) return;
+
+  const btn = document.getElementById('btnReset');
+  setLoading(btn, true);
+  try {
+    const res  = await fetch('/auth/reset', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email: resetEmail, code: resetCode, password: pw }) });
+    const data = await res.json();
+    if (!res.ok) { setLoading(btn, false); return toast('Sikertelen', data.error, 'err'); }
+    setSuccess(btn, 'Jelszó megváltoztatva!');
+    toast('Siker!', 'Mostantól az új jelszavaddal léphetsz be.', 'ok');
+    setTimeout(() => {
+      const email = resetEmail;
+      cancelReset();
+      document.getElementById('loginEmail').value = email ?? '';
+      document.getElementById('loginPw').focus();
+    }, 900);
+  } catch(e) { setLoading(btn, false); toast('Hiba', 'Hálózati hiba.', 'err'); }
+}
+
+function cancelReset() {
+  resetEmail = null; resetCode = null;
+  document.getElementById('resetPw').value  = '';
+  document.getElementById('resetPw2').value = '';
+  document.getElementById('resetCard').style.display = 'none';
+  document.getElementById('mainCard').style.display  = '';
+  history.replaceState(null, '', '/panel/auth');
+}
+
+(function initTabFromUrl() {
+  const t = new URLSearchParams(window.location.search).get('tab');
+  if (t === 'register') switchTab('register', true);
+})();
+
+(function initResetFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const code  = params.get('pwreset');
+  const email = params.get('email');
+  if (!code || !email) return;
+  resetEmail = email;
+  resetCode  = code;
+  document.getElementById('resetEmailLabel').textContent = email;
+  document.getElementById('mainCard').style.display  = 'none';
+  document.getElementById('resetCard').style.display = '';
+  setTimeout(() => document.getElementById('resetPw').focus(), 50);
+})();
+
+function tfDigit(inp, idx) {
+  inp.value = inp.value.replace(/[^0-9]/g,'');
+  const inputs = document.querySelectorAll('#twoFAInputs input');
+  if (inp.value && idx < 5) inputs[idx+1].focus();
+  if (inp.value && idx === 5) {
+    const code = [...inputs].map(i => i.value).join('');
+    if (code.length === 6) do2FA();
+  }
+}
+
+function tfKey(e, idx) {
+  const inputs = document.querySelectorAll('#twoFAInputs input');
+  if (e.key === 'Backspace' && !inputs[idx].value && idx > 0) inputs[idx-1].focus();
+  if (e.key === 'Enter') do2FA();
+}
+
+function tfPaste(e) {
+  e.preventDefault();
+  const digits = (e.clipboardData.getData('text')).replace(/[^0-9]/g,'').slice(0,6);
+  const inputs = document.querySelectorAll('#twoFAInputs input');
+  [...digits].forEach((d, i) => { if (inputs[i]) inputs[i].value = d; });
+  if (digits.length === 6) { inputs[5].focus(); do2FA(); }
+  else if (inputs[digits.length]) inputs[digits.length].focus();
+}
+
+async function do2FA() {
+  const inputs = document.querySelectorAll('#twoFAInputs input');
+  const code   = [...inputs].map(i => i.value).join('');
+  if (code.length < 6) return toast('Hibás kód', 'Add meg a teljes 6 jegyű kódot.', 'err');
+  if (!twoFATempToken) return cancelTwoFA();
+
+  const btn = document.getElementById('btnTwoFA');
+  setLoading(btn, true);
+  try {
+    const res  = await fetch('/auth/2fa/verify', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ temp_token: twoFATempToken, code }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setLoading(btn, false);
+      inputs.forEach(i => i.value = '');
+      inputs[0].focus();
+      return toast('Hibás kód', data.error, 'err');
+    }
+    setSuccess(btn, 'Hitelesítve!');
+    localStorage.setItem('vh_token', data.token);
+    toast('Siker!', 'Sikeresen beléptél, átirányítás...', 'ok');
+    setTimeout(() => window.location.replace('/panel'), 700);
+  } catch(e) { setLoading(btn, false); toast('Hiba', 'Hálózati hiba.', 'err'); }
+}
+
+function checkPw() {
+  const val = document.getElementById('regPw').value;
+  const checks = {
+    rLen:  val.length >= 6,
+    rNum:  /[0-9]/.test(val),
+    rSpec: /[^a-zA-Z0-9]/.test(val),
+    rSpace: val.length > 0 && !/\s/.test(val),
+  };
+  for (const [id, ok] of Object.entries(checks)) {
+    document.getElementById(id).classList.toggle('ok', ok);
+  }
+}
+
+function setLoading(btn, on) {
+  btn.disabled = on;
+  btn.classList.toggle('loading', on);
+}
+function setSuccess(btn, label) {
+  btn.classList.remove('loading');
+  btn.classList.add('success');
+  btn.querySelector('.btn-label').textContent = label;
+}
+
+function codeDigit(inp, idx) {
+  inp.value = inp.value.replace(/[^0-9]/g,'');
+  const inputs = document.querySelectorAll('#codeInputs input');
+  if (inp.value && idx < 5) inputs[idx+1].focus();
+  if (inp.value && idx === 5) {
+    const code = [...inputs].map(i => i.value).join('');
+    if (code.length === 6) doVerify();
+  }
+}
+
+function codeKey(e, idx) {
+  const inputs = document.querySelectorAll('#codeInputs input');
+  if (e.key === 'Backspace' && !inputs[idx].value && idx > 0) {
+    inputs[idx-1].focus();
+  }
+  if (e.key === 'Enter') doVerify();
+}
+
+function codePaste(e) {
+  e.preventDefault();
+  const digits = (e.clipboardData.getData('text')).replace(/[^0-9]/g,'').slice(0,6);
+  const inputs = document.querySelectorAll('#codeInputs input');
+  [...digits].forEach((d, i) => { if (inputs[i]) inputs[i].value = d; });
+  if (digits.length === 6) { inputs[5].focus(); doVerify(); }
+  else if (inputs[digits.length]) inputs[digits.length].focus();
+}
+
+async function doVerify() {
+  const inputs = document.querySelectorAll('#codeInputs input');
+  const code   = [...inputs].map(i => i.value).join('');
+  if (code.length < 6) return toast('Hibás kód', 'Add meg a teljes 6 jegyű kódot.', 'err');
+
+  const btn = document.getElementById('btnVerify');
+  setLoading(btn, true);
+  try {
+    const res  = await fetch('/auth/verify', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email: verifyEmail, code }) });
+    const data = await res.json();
+    if (!res.ok) { setLoading(btn, false); return toast('Hibás kód', data.error, 'err'); }
+    if (data.pending_approval) {
+      setSuccess(btn, 'Elküldve!');
+      toast('Email megerősítve', 'A fiókod jóváhagyásra vár.', 'ok');
+      setTimeout(() => {
+        document.getElementById('verifyCard').style.display  = 'none';
+        document.getElementById('pendingCard').style.display = '';
+      }, 700);
+      return;
+    }
+    setSuccess(btn, 'Hitelesítve!');
+    localStorage.setItem('vh_token', data.token);
+    toast('Siker!', 'Sikeresen hitelesítve, átirányítás...', 'ok');
+    setTimeout(() => window.location.replace('/panel'), 900);
+  } catch(e) { setLoading(btn, false); toast('Hiba', 'Hálózati hiba.', 'err'); }
+}
+
+async function resendCode() {
+  toast('Újraküldés', 'Kérjük regisztrálj újra a kód újraküldéséhez.', 'err');
+}
+
+function showHint(id, msg) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = msg; el.classList.add('show'); }
+}
+function clearHints() {
+  document.querySelectorAll('.field-hint').forEach(el => { el.textContent=''; el.classList.remove('show'); });
+}
+
+const ICO_OK  = '<path d="M20 6L9 17l-5-5"/>';
+const ICO_ERR = '<path d="M18 6L6 18M6 6l12 12"/>';
+
+let toastTimer;
+function toast(title, msg, type='') {
+  const el = document.getElementById('toast');
+  document.getElementById('toastTitle').textContent = title;
+  document.getElementById('toastMsg').textContent   = msg;
+  document.getElementById('toastIco').innerHTML     = type === 'ok' ? ICO_OK : ICO_ERR;
+  el.className = `toast show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(hideToast, 4000);
+}
+function hideToast() {
+  const el = document.getElementById('toast');
+  el.classList.remove('show');
+}
+</script>
+</body>
+</html>

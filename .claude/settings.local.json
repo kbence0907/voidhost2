@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\kbence\\\\Desktop\\\\VoidHost\" -Recurse -Force | Select-Object FullName | Sort-Object FullName | ForEach-Object { $_.FullName })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\kbence\\\\Desktop\\\\VoidHost\" -Recurse -Force | Select-Object FullName | Sort-Object FullName | ForEach-Object { $_.FullName.Replace\\('C:\\\\Users\\\\kbence\\\\Desktop\\\\VoidHost', '.'\\) })",
+      "Bash(node --input-type=module)",
+      "Bash(node --check src/routes/api.js)",
+      "Bash(node --check src/routes/auth.js)",
+      "Bash(node --check src/db.js)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\kbence\\\\Desktop\\\\VoidHost\" -Recurse -File)",
+      "Bash(Select-Object FullName)",
+      "Bash(Sort-Object FullName)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\kbence\\\\Desktop\\\\VoidHost\\\\public\\\\\" -Recurse | Select-Object FullName, Name | Format-List)",
+      "Bash(findstr /i \"speakeasy\\\\|otplib\\\\|qrcode\\\\|2fa\\\\|totp\\\\|session\\\\|uuid\")",
+      "Bash(npm install *)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\kbence\\\\Desktop\\\\VoidHost\" -Recurse -Force | Select-Object FullName, @{Name=\"Type\"; Expression={if\\($_.PSIsContainer\\){\"DIR\"}else{\"FILE\"}}} | Sort-Object FullName | Format-Table -AutoSize)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(node --check src/app.js)",
+      "Bash(node --check src/jwt.js)",
+      "Bash(node --check src/crypto.js)",
+      "Bash(node --check src/mailer.js)",
+      "Bash(node --check src/modules/welcome.js)",
+      "Bash(node -e \"const fs=require\\('fs'\\);const s=fs.readFileSync\\('src/routes/auth.js','utf8'\\);const lines=s.split\\('\\\\n'\\);for\\(let i=78;i<88;i++\\){console.log\\(i+1, JSON.stringify\\(lines[i]\\)\\);}\")",
+      "Bash(node -e ' *)",
+      "Bash(node --check src/modules/commands.js)",
+      "Bash(node fix-tmp.cjs)",
+      "Bash(node --check src/bot.js)",
+      "Bash(node --check src/bot-runner.js)",
+      "Bash(node --check src/bot-process.js)",
+      "Bash(node --check src/sse.js)",
+      "Bash(node --check src/discord.js)",
+      "Bash(node -e \"import\\('express-rate-limit'\\).then\\(m => console.log\\(Object.keys\\(m\\)\\)\\)\")",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(48\\).toString\\('hex'\\)\\)\")"
+    ]
+  }
+}

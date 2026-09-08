@@ -1,0 +1,29 @@
+{
+  "name": "voidhost",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --use-system-ca src/index.js",
+    "dev": "nodemon --exec \"node --use-system-ca\" src/index.js",
+    "db:push": "drizzle-kit push --config drizzle.config.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.6",
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.45.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.5",
+    "nodemailer": "^6.10.1",
+    "otplib": "^13.4.0",
+    "qrcode": "^1.5.4",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10",
+    "nodemon": "^3.1.10"
+  }
+}

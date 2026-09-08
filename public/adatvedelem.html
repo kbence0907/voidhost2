@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" href="/assets/image/logo.png" />
+<title>VoidHost · Adatvédelmi Tájékoztató</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/client/src/css/landingpage/index.css" />
+<style>
+  .legal-wrap{max-width:860px;margin:0 auto;padding:120px 22px 100px}
+  .legal-wrap h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,5vw,42px);line-height:1.1;margin:0 0 6px}
+  .legal-wrap .updated{color:var(--dim,#8b90a8);font-size:14px;margin:0 0 40px}
+  .legal-wrap h2{font-family:'Space Grotesk',sans-serif;font-size:22px;margin:44px 0 12px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
+  .legal-wrap h3{font-size:17px;margin:24px 0 8px}
+  .legal-wrap p,.legal-wrap li{color:var(--ink,#e7e9f3);line-height:1.7;font-size:15px}
+  .legal-wrap ul{padding-left:22px;margin:10px 0}
+  .legal-wrap li{margin:6px 0}
+  .legal-wrap a{color:#7aa2ff}
+  .legal-wrap b,.legal-wrap strong{color:#fff}
+  .legal-wrap .box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .legal-back{display:inline-block;margin-bottom:28px;color:#7aa2ff;text-decoration:none;font-size:14px}
+  table.legal{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  table.legal th,table.legal td{border:1px solid rgba(255,255,255,.1);padding:9px 12px;text-align:left;vertical-align:top}
+  table.legal th{background:rgba(255,255,255,.04);font-family:'Space Grotesk',sans-serif}
+</style>
+</head>
+<body>
+
+<div class="galaxy"></div>
+<div class="nebula a"></div>
+<div class="nebula b"></div>
+
+<main class="legal-wrap">
+  <a class="legal-back" href="/">← Vissza a főoldalra</a>
+
+  <h1>Adatvédelmi Tájékoztató</h1>
+  <p class="updated">Hatályos: 2026. július 2. napjától · Utolsó módosítás: 2026. július 2.</p>
+
+  <div class="box">
+    <p>A jelen Adatvédelmi Tájékoztató a VoidHost szolgáltatás (voidhost.hu, panel.voidhost.hu) által végzett személyesadat-kezelésről nyújt tájékoztatást az Európai Parlament és a Tanács (EU) 2016/679 rendelete (<b>GDPR</b>), valamint az információs önrendelkezési jogról és az információszabadságról szóló <b>2011. évi CXII. törvény (Infotv.)</b> alapján.</p>
+  </div>
+
+  <h2>1. Az adatkezelő</h2>
+  <ul>
+    <li><b>Adatkezelő:</b> a VoidHost fejlesztői csapata (magánszemély(ek) által üzemeltetett, nonprofit hobbiprojekt)</li>
+    <li><b>Weboldal:</b> voidhost.hu, panel.voidhost.hu</li>
+    <li><b>Kapcsolat adatvédelmi ügyekben:</b> noreply@voidhost.hu, illetve a hivatalos Discord szerver</li>
+    <li>Az Adatkezelő adatvédelmi tisztviselő kijelölésére nem kötelezett, és ilyet nem jelölt ki.</li>
+  </ul>
+
+  <h2>2. A kezelt személyes adatok, célok és jogalapok</h2>
+  <p>Az Adatkezelő az alábbi személyes adatokat kezeli:</p>
+
+  <table class="legal">
+    <tr><th>Adatkör</th><th>Cél</th><th>Jogalap (GDPR 6. cikk)</th><th>Megőrzési idő</th></tr>
+    <tr>
+      <td>E-mail cím, jelszó (titkosított hash formában), megjelenített név</td>
+      <td>Fiók létrehozása, azonosítás, bejelentkezés, kapcsolattartás</td>
+      <td>Szerződés teljesítése (1) b) pont</td>
+      <td>A fiók törléséig</td>
+    </tr>
+    <tr>
+      <td>Discord adatok: Discord felhasználói azonosító (ID), felhasználónév, avatar</td>
+      <td>Discord (OAuth2) bejelentkezés, azonosítás, a Szolgáltatás működése</td>
+      <td>Szerződés teljesítése (1) b) pont</td>
+      <td>A fiók törléséig</td>
+    </tr>
+    <tr>
+      <td>Discord bot token (titkosítva tárolva), bot- és szerveradatok (bot ID, név, szerver ID, név, taglétszám)</td>
+      <td>A kiválasztott bot-funkciók üzemeltetése a Felhasználó nevében</td>
+      <td>Szerződés teljesítése (1) b) pont</td>
+      <td>A bot eltávolításáig / fiók törléséig</td>
+    </tr>
+    <tr>
+      <td>Kétfaktoros hitelesítés (TOTP) titkos kulcsa</td>
+      <td>A fiók fokozott biztonsága (opcionális)</td>
+      <td>Szerződés teljesítése / hozzájárulás (1) a)–b)</td>
+      <td>A 2FA kikapcsolásáig / fiók törléséig</td>
+    </tr>
+    <tr>
+      <td>E-mail megerősítő és jelszó-visszaállító kódok</td>
+      <td>E-mail cím hitelesítése, jelszó helyreállítása</td>
+      <td>Szerződés teljesítése (1) b) pont</td>
+      <td>A kód lejártáig (rövid idő)</td>
+    </tr>
+    <tr>
+      <td>Napló- (log) adatok: esemény, időbélyeg, felhasználónév/ID, forrás; technikai adatok (IP-cím a visszaélés-védelemhez / rate limiting)</td>
+      <td>Biztonság, visszaélés-megelőzés, hibaelhárítás, a Szolgáltatás üzemeltetése</td>
+      <td>Jogos érdek (1) f) pont</td>
+      <td>Legfeljebb 12 hónap, illetve a cél megvalósulásáig</td>
+    </tr>
+    <tr>
+      <td>Munkamenet-süti / bejelentkezési token (JWT)</td>
+      <td>A bejelentkezett állapot fenntartása</td>
+      <td>Jogos érdek / a szolgáltatás nyújtásához feltétlenül szükséges (1) f)</td>
+      <td>A munkamenet / token lejártáig</td>
+    </tr>
+  </table>
+
+  <h2>3. Sütik (cookie-k)</h2>
+  <p>A VoidHost kizárólag a működéshez feltétlenül szükséges (munkamenet-fenntartó, bejelentkezési) sütiket / tokeneket használ. Ezekhez a GDPR szerint nem szükséges külön hozzájárulás. Marketing- és statisztikai célú, harmadik feles nyomkövető sütiket az Adatkezelő nem alkalmaz.</p>
+
+  <h2>4. Adatfeldolgozók és adattovábbítás</h2>
+  <p>Az Adatkezelő a Szolgáltatás nyújtásához az alábbi külső szolgáltatókat (adatfeldolgozókat / önálló adatkezelőket) veszi igénybe:</p>
+  <ul>
+    <li><b>Discord Inc.</b> – a bejelentkezés (OAuth2) és a bot-funkciók a Discord platformon keresztül működnek. A Discord önálló adatkezelőként is kezel adatokat; erre a Discord saját adatvédelmi szabályzata irányadó.</li>
+    <li><b>E-mail (SMTP) szolgáltató</b> – a megerősítő és értesítő e-mailek kézbesítéséhez.</li>
+    <li><b>Tárhely- / szerverszolgáltató</b> – az alkalmazás és az adatbázis (MySQL) üzemeltetéséhez.</li>
+    <li><b>Betűtípus-szolgáltató (Google Fonts)</b> – a weboldal megjelenítéséhez.</li>
+  </ul>
+  <p>Az Adatkezelő személyes adatokat harmadik személynek marketing célból nem ad át, és nem értékesít. Adattovábbítás hatóság részére kizárólag jogszabályi kötelezettség alapján történhet. Amennyiben adattovábbítás az EGT-n kívülre történik (pl. Discord), az a GDPR szerinti megfelelő garanciák mellett valósul meg.</p>
+
+  <h2>5. Adatbiztonság</h2>
+  <p>Az Adatkezelő megfelelő technikai és szervezési intézkedéseket alkalmaz az adatok védelme érdekében, így különösen: a jelszavak visszafejthetetlen (bcrypt) hash formában, a bot tokenek titkosítva kerülnek tárolásra, a hozzáférés jogosultsághoz kötött, opcionális kétfaktoros hitelesítés (2FA) érhető el. A biztonságos átvitel érdekében a Szolgáltatás HTTPS titkosítást használ. A teljes biztonság ugyanakkor az interneten nem garantálható.</p>
+
+  <h2>6. Az érintett jogai</h2>
+  <p>A GDPR alapján Önt az alábbi jogok illetik meg, amelyeket a noreply@voidhost.hu címen gyakorolhat:</p>
+  <ul>
+    <li><b>Hozzáférés joga:</b> tájékoztatást kérhet a kezelt adatairól;</li>
+    <li><b>Helyesbítés joga:</b> kérheti pontatlan adatai javítását;</li>
+    <li><b>Törlés joga („elfeledtetéshez való jog”):</b> kérheti adatai törlését, illetve fiókját közvetlenül is törölheti;</li>
+    <li><b>Az adatkezelés korlátozásához való jog;</b></li>
+    <li><b>Adathordozhatóság joga:</b> adatait tagolt, géppel olvasható formátumban kérheti;</li>
+    <li><b>Tiltakozás joga:</b> tiltakozhat a jogos érdeken alapuló adatkezelés ellen;</li>
+    <li><b>Hozzájárulás visszavonása:</b> a hozzájáruláson alapuló adatkezelést bármikor visszavonhatja (a visszavonás a korábbi adatkezelés jogszerűségét nem érinti).</li>
+  </ul>
+  <p>Az Adatkezelő a kérelmet a beérkezéstől számított legfeljebb egy hónapon belül teljesíti.</p>
+
+  <h2>7. Kiskorúak védelme</h2>
+  <p>A Szolgáltatás 16. életévüket betöltött személyek számára érhető el. Az Adatkezelő tudatosan nem gyűjt 16 év alatti személyek adatait. Amennyiben ilyen adat kezeléséről tudomást szerez, azt haladéktalanul törli.</p>
+
+  <h2>8. A tájékoztató módosítása</h2>
+  <p>Az Adatkezelő fenntartja a jogot a jelen Adatvédelmi Tájékoztató módosítására. A mindenkori hatályos változat a weboldalon érhető el, a módosítás a közzététellel lép hatályba.</p>
+
+  <p style="margin-top:40px"><a href="/aszf">→ Általános Szerződési Feltételek (ÁSZF)</a></p>
+</main>
+
+</body>
+</html>
